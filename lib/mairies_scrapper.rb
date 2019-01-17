@@ -20,16 +20,14 @@ end
 
 
 
-
-
-
-
-
 # -------- Récupérer email ----------
 def get_townhall_email(townhall_url)
     email = townhall_url.xpath ('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]')
     return email.text 
+    
 end
+
+
 
 
 # -------- Créer un tableau avec les noms de ville ----------
