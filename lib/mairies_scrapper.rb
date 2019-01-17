@@ -9,7 +9,7 @@ require 'open-uri'
 
 
 
-# -------- Obtenir l'url de la mairie ----------
+# -------- Fonction récup url des mairies ----------
 def get_townhall_urls(city)
 page = Nokogiri::HTML(open('https://www.annuaire-des-mairies.com/95/' + city.split.join('-'))) #change les espaces par des -
 return page
@@ -20,7 +20,7 @@ end
 
 
 
-city = ""
+
 
 
 
@@ -40,22 +40,20 @@ end
 
 
 
-    # Arrays --
+# -------- Var ---------
     tab_nom_ville = []
     arr_email = []
-    # --------
+    
 
 
-
+# -------- Créer un tableau avec les noms de ville ----------
     nom_ville.each do |name| #
         tab_nom_ville << name.text.downcase #Tableau où se trouve les noms de ville en minuscule
     end
 
 
 
-nom_ville.take(5) do |name|
-    
-    city = name
+nom_ville.take(5) do |city|
     get_townhall_urls(city)
     townhall_url = get_townhall_urls(city) #l'url de la ville = get url de la ville
     get_townhall_email(townhall_url).text
@@ -63,12 +61,12 @@ nom_ville.take(5) do |name|
         arr_email << get_townhall_email(townhall_url).text
 
     else
-        arr_email << "bidon@gmail.com" #Remplace les endroits ou il n'y a pas d'email par bidon@gmail.com
+        arr_email << "bidon@gmail.com" #Remplace les endroits où il n'y a pas d'email par bidon@gmail.com
     end
 
 
 end
-puts arr_email
+
 
 hash_come =  Hash[tab_nom_ville.zip(arr_email.map)]
 array = []
@@ -82,13 +80,6 @@ hash_come.each do |key, value|
 end
 
 # puts array
-
-
-
-
-
-
-
 
 
 
