@@ -5,45 +5,44 @@ require 'open-uri'
 
 
 def crypto_scrapper
-page = Nokogiri::HTML(open('https://coinmarketcap.com/all/views/all/'))
+   page = Nokogiri::HTML(open('https://coinmarketcap.com/all/views/all/'))
 
-name_crypto = []
-price_crypto = []
-
-
-#---- récupère les noms ---
-
-link = page.xpath('//*/td[3]')
-link.each do |name|
-   name_crypto << name.text
-end
+   name_crypto = []
+   price_crypto = []
 
 
+   #---- récupère les noms ---
 
-#---- récupère les prix ---
-
-link = page.xpath('//*[@class="price"]')
-link.each do |price|
-   price_crypto << price.text
-end
+   link = page.xpath('//*/td[3]')
+   link.each do |name|
+      name_crypto << name.text
+   end
 
 
 
-#---- création du hash final ---
+   #---- récupère les prix ---
 
-hashpn =  Hash[name_crypto.zip(price_crypto.map)]
-hashpn.each {|k, v| v[0] = "" }
-hashpn.transform_values!(&:to_f)
- 
+   link = page.xpath('//*[@class="price"]')
+   link.each do |price|
+      price_crypto << price.text
+   end
 
-#---- création des Hashs ---
 
-arraypn = []
-hashpn.each do |key, value| 
-    hash = Hash.new
-    hash[key] = value
-    arraypn << hash
-end
-   return arraypn
-end
 
+   #---- création du hash final ---
+
+   hashpn =  Hash[name_crypto.zip(price_crypto.map)]
+   hashpn.each {|k, v| v[0] = "" }
+   hashpn.transform_values!(&:to_f)
+   
+
+   #---- création des Hashs ---
+
+   arraypn = []
+   hashpn.each do |key, value| 
+      hash = Hash.new
+      hash[key] = value
+      arraypn << hash
+   end
+      return arraypn
+   end

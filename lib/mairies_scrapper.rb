@@ -11,8 +11,8 @@ require 'open-uri'
 
 # -------- Fonction récup url des mairies ----------
 def get_townhall_urls(city)
-page = Nokogiri::HTML(open('https://www.annuaire-des-mairies.com/95/' + city.split.join('-'))) #change les espaces par des -
-return page
+    page = Nokogiri::HTML(open('https://www.annuaire-des-mairies.com/95/' + city.split.join('-'))) #change les espaces par des -
+    return page
 end
 
 
@@ -29,29 +29,26 @@ def get_townhall_email(townhall_url)
     email = townhall_url.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]')
     return email.text
 end
-# city = gets.chomp
-# townhall_url = get_townhall_urls(city)
-# get_townhall_email(townhall_url)
 
 # -------- Créer un tableau avec les noms de ville ----------
 
-    page = Nokogiri::HTML(open('http://annuaire-des-mairies.com/val-d-oise.html'))
+page = Nokogiri::HTML(open('http://annuaire-des-mairies.com/val-d-oise.html'))
 
 
-    nom_ville = page.xpath ('//*[@class= "lientxt"]') #Extrait le nom de la ville
+nom_ville = page.xpath ('//*[@class= "lientxt"]') #Extrait le nom de la ville
 
 
 
-# -------- Var ---------
-    tab_nom_ville = []
-    arr_email = []
-    
+# -------- Array ---------
+tab_nom_ville = []
+arr_email = []
+
 
 
 # -------- Créer un tableau avec les noms de ville ----------
-    nom_ville.each do |name| #
-        tab_nom_ville << name.text.downcase #Tableau où se trouve les noms de ville en minuscule
-    end
+nom_ville.each do |name| 
+    tab_nom_ville << name.text.downcase #Tableau où se trouve les noms de ville en minuscule
+end
 
 tab_nom_ville.each do |city|
     get_townhall_urls(city)
@@ -59,7 +56,6 @@ tab_nom_ville.each do |city|
     get_townhall_email(townhall_url)
     if get_townhall_email(townhall_url) =~ /@/
         arr_email << get_townhall_email(townhall_url)
-
     else
         arr_email << "bidon@gmail.com" #Remplace les endroits où il n'y a pas d'email par bidon@gmail.com
     end
