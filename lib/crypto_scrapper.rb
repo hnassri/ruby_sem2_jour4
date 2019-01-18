@@ -45,4 +45,4 @@ def crypto_scrapper
       arraypn << hash
    end
       return arraypn
-   end
+end
