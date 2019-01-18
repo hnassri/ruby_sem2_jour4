@@ -29,7 +29,9 @@ def get_townhall_email(townhall_url)
     email = townhall_url.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]')
     return email.text
 end
-
+# city = gets.chomp
+# townhall_url = get_townhall_urls(city)
+# get_townhall_email(townhall_url)
 
 # -------- Créer un tableau avec les noms de ville ----------
 
@@ -51,14 +53,12 @@ end
         tab_nom_ville << name.text.downcase #Tableau où se trouve les noms de ville en minuscule
     end
 
-
-
-nom_ville.take(5) do |city|
+tab_nom_ville.each do |city|
     get_townhall_urls(city)
     townhall_url = get_townhall_urls(city) #l'url de la ville = get url de la ville
-    get_townhall_email(townhall_url).text
-    if get_townhall_email(townhall_url).text =~ /@/
-        arr_email << get_townhall_email(townhall_url).text
+    get_townhall_email(townhall_url)
+    if get_townhall_email(townhall_url) =~ /@/
+        arr_email << get_townhall_email(townhall_url)
 
     else
         arr_email << "bidon@gmail.com" #Remplace les endroits où il n'y a pas d'email par bidon@gmail.com
@@ -79,7 +79,7 @@ hash_come.each do |key, value|
 
 end
 
-# puts array
+puts array
 
 
 
